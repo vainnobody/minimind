@@ -21,7 +21,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from transformers import AutoModel
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from dataset.lm_dataset import RLAIFDataset
-from trainer.trainer_utils import Logger, is_main_process, lm_checkpoint, init_distributed_mode, setup_seed, SkipBatchSampler, init_model, LMForRewardModel
+from trainer.trainer_utils import Logger, is_main_process, lm_checkpoint, init_distributed_mode, setup_seed, SkipBatchSampler, init_model, LMForRewardModel, resolve_data_path
 from trainer.rollout_engine import create_rollout_engine, compute_per_token_logps
 
 warnings.filterwarnings('ignore')
@@ -241,6 +241,7 @@ if __name__ == "__main__":
     parser.add_argument("--sglang_model_path", type=str, default="../model", help="SGLang tokenizer路径")
     parser.add_argument("--sglang_shared_path", type=str, default="./sglang_ckpt_grpo", help="SGLang共享存储路径")
     args = parser.parse_args()
+    args.data_path = resolve_data_path(args.data_path)
 
     # ========== 1. 初始化环境和随机种子 ==========
     local_rank = init_distributed_mode()

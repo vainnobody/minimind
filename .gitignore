@@ -4,3 +4,17 @@ __pycache__/
 out
 website/
 docs-minimind/
+
+# Local datasets and generated artifacts
+data/
+output/
+tmp/
+model_learn_tokenizer/
+
+# Local editor / notebook noise
+.ipynb_checkpoints/
+
+# Local hidden helper files
+dataset/.msc
+dataset/.mv
+dataset/._____temp/

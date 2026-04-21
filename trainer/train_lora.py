@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, DistributedSampler
 from model.model_minimind import MiniMindConfig
 from dataset.lm_dataset import SFTDataset
 from model.model_lora import save_lora, apply_lora
-from trainer.trainer_utils import get_lr, Logger, is_main_process, lm_checkpoint, init_distributed_mode, setup_seed, init_model, SkipBatchSampler
+from trainer.trainer_utils import get_lr, Logger, is_main_process, lm_checkpoint, init_distributed_mode, setup_seed, init_model, SkipBatchSampler, resolve_data_path
 
 warnings.filterwarnings('ignore')
 
@@ -99,6 +99,7 @@ if __name__ == "__main__":
     # PS：多卡 DDP + LoRA 场景下建议关闭 use_compile，避免触发 torch.compile 的兼容性问题
     parser.add_argument("--use_compile", default=0, type=int, choices=[0, 1], help="是否使用torch.compile加速（0=否，1=是）")
     args = parser.parse_args()
+    args.data_path = resolve_data_path(args.data_path)
 
     # ========== 1. 初始化环境和随机种子 ==========
     local_rank = init_distributed_mode()

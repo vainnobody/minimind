@@ -37,6 +37,39 @@ def Logger(content):
         print(content)
 
 
+def resolve_data_path(path):
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    candidate_paths = []
+
+    if path:
+        candidate_paths.extend([
+            path,
+            os.path.abspath(path),
+            os.path.abspath(os.path.join(os.getcwd(), path)),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), path)),
+            os.path.abspath(os.path.join(repo_root, path)),
+        ])
+
+        file_name = os.path.basename(path)
+        candidate_paths.extend([
+            os.path.join(repo_root, 'data', file_name),
+            os.path.join(repo_root, 'dataset', file_name),
+        ])
+
+    seen = set()
+    for candidate in candidate_paths:
+        normalized = os.path.normpath(candidate)
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        if os.path.exists(normalized):
+            return normalized
+
+    if path:
+        return os.path.normpath(os.path.join(repo_root, 'data', os.path.basename(path)))
+    return os.path.join(repo_root, 'data')
+
+
 def get_lr(current_step, total_steps, lr):
     return lr*(0.1 + 0.45*(1 + math.cos(math.pi * current_step / total_steps)))
 
