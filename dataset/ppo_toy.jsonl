@@ -1,0 +1,1 @@
+{"conversations": [{"role": "user", "content": "请用两句话解释 PPO 为什么要使用裁剪目标。"}, {"role": "assistant", "content": "PPO 使用裁剪目标是为了限制新策略相对旧策略变化过大，从而让训练更稳定。这样即使某次 reward 较高，模型也不会因为单个样本被过度更新。"}]}
