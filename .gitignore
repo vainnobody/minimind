@@ -10,6 +10,7 @@ data/
 output/
 tmp/
 model_learn_tokenizer/
+tokenizer/
 
 # Local editor / notebook noise
 .ipynb_checkpoints/
